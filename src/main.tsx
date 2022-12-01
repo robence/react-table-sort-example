@@ -21,63 +21,47 @@ function App() {
   const columns = React.useMemo<ColumnDef<Person>[]>(
     () => [
       {
-        header: 'Name',
-        footer: props => props.column.id,
-        columns: [
-          {
-            accessorKey: 'firstName',
-            cell: info => info.getValue(),
-            footer: props => props.column.id,
-          },
-          {
-            accessorFn: row => row.lastName,
-            id: 'lastName',
-            cell: info => info.getValue(),
-            header: () => <span>Last Name</span>,
-            footer: props => props.column.id,
-          },
-        ],
+        accessorKey: 'firstName',
+        cell: (info) => info.getValue(),
+        header: () => <span>First Name</span>,
+        footer: (props) => props.column.id,
       },
       {
-        header: 'Info',
-        footer: props => props.column.id,
-        columns: [
-          {
-            accessorKey: 'age',
-            header: () => 'Age',
-            footer: props => props.column.id,
-          },
-          {
-            header: 'More Info',
-            columns: [
-              {
-                accessorKey: 'visits',
-                header: () => <span>Visits</span>,
-                footer: props => props.column.id,
-              },
-              {
-                accessorKey: 'status',
-                header: 'Status',
-                footer: props => props.column.id,
-              },
-              {
-                accessorKey: 'progress',
-                header: 'Profile Progress',
-                footer: props => props.column.id,
-              },
-            ],
-          },
-          {
-            accessorKey: 'createdAt',
-            header: 'Created At',
-          },
-        ],
+        accessorKey: 'lastName',
+        cell: (info) => info.getValue(),
+        header: () => <span>Last Name</span>,
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorKey: 'age',
+        header: () => 'Age',
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorKey: 'visits',
+        header: () => <span>Visits</span>,
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorKey: 'progress',
+        header: 'Profile Progress',
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorKey: 'createdAt',
+        header: 'Created At',
       },
     ],
     []
   )
 
-  const [data, setData] = React.useState(() => makeData(100000))
+  const [data, setData]: [Person[], (value: () => Person[]) => void] =
+    React.useState(() => makeData(100000))
   const refreshData = () => setData(() => makeData(100000))
 
   const table = useReactTable({
@@ -97,9 +81,9 @@ function App() {
       <div className="h-2" />
       <table>
         <thead>
-          {table.getHeaderGroups().map(headerGroup => (
+          {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
+              {headerGroup.headers.map((header) => {
                 return (
                   <th key={header.id} colSpan={header.colSpan}>
                     {header.isPlaceholder ? null : (
@@ -131,10 +115,10 @@ function App() {
           {table
             .getRowModel()
             .rows.slice(0, 10)
-            .map(row => {
+            .map((row) => {
               return (
                 <tr key={row.id}>
-                  {row.getVisibleCells().map(cell => {
+                  {row.getVisibleCells().map((cell) => {
                     return (
                       <td key={cell.id}>
                         {flexRender(

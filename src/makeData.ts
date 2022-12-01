@@ -8,11 +8,10 @@ export type Person = {
   progress: number
   status: 'relationship' | 'complicated' | 'single'
   createdAt: Date
-  subRows?: Person[]
 }
 
 const range = (len: number) => {
-  const arr = []
+  const arr: number[] = []
   for (let i = 0; i < len; i++) {
     arr.push(i)
   }
@@ -41,7 +40,6 @@ export function makeData(...lens: number[]) {
     return range(len).map((d): Person => {
       return {
         ...newPerson(),
-        subRows: lens[depth + 1] ? makeDataLevel(depth + 1) : undefined,
       }
     })
   }
